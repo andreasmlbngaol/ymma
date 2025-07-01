@@ -3,11 +3,9 @@ package org.andreasmlbngaol.ymma.auth.domain
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponse(
-    val id: Long,
+data class RegisterRequest(
     val name: String,
     val email: String,
     val username: String,
-    val isVerified: Boolean,
-    val imageUrl: String? = null
+    val password: String
 )
