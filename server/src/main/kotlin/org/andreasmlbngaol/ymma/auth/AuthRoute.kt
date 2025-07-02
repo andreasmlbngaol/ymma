@@ -3,17 +3,21 @@ package org.andreasmlbngaol.ymma.auth
 import at.favre.lib.crypto.bcrypt.BCrypt
 import io.ktor.http.Cookie
 import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.RoutingContext
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
-import org.andreasmlbngaol.ymma.auth.domain.LoginRequest
-import org.andreasmlbngaol.ymma.auth.domain.LoginResponse
-import org.andreasmlbngaol.ymma.auth.domain.RegisterRequest
+import org.andreasmlbngaol.ymma.domains.auth.LoginRequest
+import org.andreasmlbngaol.ymma.domains.auth.LoginResponse
+import org.andreasmlbngaol.ymma.domains.auth.RegisterRequest
 import org.andreasmlbngaol.ymma.database.dao.UsersDao
-import org.andreasmlbngaol.ymma.database.dto.User
+import org.andreasmlbngaol.ymma.domains.auth.ChangePasswordRequest
+import org.andreasmlbngaol.ymma.domains.auth.User
 import org.andreasmlbngaol.ymma.utils.respondJson
 
 fun Route.authRoute() {
@@ -85,6 +89,68 @@ fun Route.authRoute() {
                 ?: return@post call.respondJson(HttpStatusCode.Unauthorized, "User not found")
 
             setCookieAndRespondToken(user)
+        }
+
+        authenticate("auth") {
+            post("/logout") {
+                call.response.cookies.append(
+                    Cookie(
+                        name = "refresh_token",
+                        value = "",
+                        path = "/",
+                        httpOnly = true,
+                        maxAge = 0
+                    )
+                )
+
+                call.response.cookies.append(
+                    Cookie(
+                        name = "access_token",
+                        value = "",
+                        path = "/",
+                        httpOnly = true,
+                        maxAge = 0
+                    )
+                )
+
+                call.respondJson(
+                    HttpStatusCode.OK,
+                    "Logout successful"
+                )
+            }
+
+            route("/settings") {
+                post("/password") {
+                    val principal = call.principal<JWTPrincipal>()!!
+                    val userId = principal.payload.getClaim("sub").asLong()
+
+                    val payload = call.receive<ChangePasswordRequest>()
+
+                    val oldPassword = payload.oldPassword.trim()
+                    val newPassword = payload.newPassword.trim()
+
+                    val isPasswordMatch = BCrypt.verifyer().verify(
+                        oldPassword.toByteArray(),
+                        UsersDao.findById(userId)?.passwordHashed?.toByteArray()
+                    ).verified
+
+                    if(!isPasswordMatch) return@post call.respondJson(HttpStatusCode.BadRequest, "Invalid old password")
+                    if(!validatePassword(newPassword)) return@post call.respondJson(HttpStatusCode.BadRequest, "Invalid new password format. Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.")
+
+                    val hashedPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray())
+                    val updatedRows = UsersDao.changePassword(userId, hashedPassword)
+                    if(updatedRows == 0) return@post call.respondJson(HttpStatusCode.InternalServerError, "Error while updating password")
+
+                    call.respondJson(
+                        HttpStatusCode.OK,
+                        "Password updated successfully"
+                    )
+                }
+
+                post("/profile-picture") {
+
+                }
+            }
         }
     }
 }

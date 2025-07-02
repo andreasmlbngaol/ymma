@@ -1,4 +1,4 @@
-package org.andreasmlbngaol.ymma.auth.domain
+package org.andreasmlbngaol.ymma.domains.auth
 
 import kotlinx.serialization.Serializable
 

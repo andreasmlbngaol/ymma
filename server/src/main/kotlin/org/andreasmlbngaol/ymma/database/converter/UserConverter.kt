@@ -1,20 +1,8 @@
-package org.andreasmlbngaol.ymma.database.dto
+package org.andreasmlbngaol.ymma.database.converter
 
-import kotlinx.serialization.Serializable
 import org.andreasmlbngaol.ymma.database.tables.Users
+import org.andreasmlbngaol.ymma.domains.auth.User
 import org.jetbrains.exposed.v1.core.ResultRow
-
-@Serializable
-data class User(
-    val id: Long,
-    val name: String,
-    val email: String,
-    val username: String,
-    val passwordHashed: String,
-    val isVerified: Boolean,
-    val imageUrl: String? = null,
-    val isActive: Boolean = true
-)
 
 fun ResultRow.toUser() = User(
     id = this[Users.id].value,

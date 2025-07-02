@@ -21,7 +21,7 @@ import org.andreasmlbngaol.ymma.utils.respondJson
 fun Application.authenticationPlugin() {
     val secretKey = environment.config.config("ktor.jwt").property("secretKey").getString()
     install(Authentication) {
-        jwt("auth-jwt") {
+        jwt("auth") {
             realm = "Access to the application"
             verifier(
                 JWT

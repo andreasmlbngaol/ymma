@@ -16,7 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.andreasmlbngaol.ymma.auth.JwtConfig
 import org.andreasmlbngaol.ymma.auth.authRoute
+import org.andreasmlbngaol.ymma.colleges.collegeRoute
 import org.andreasmlbngaol.ymma.database.DatabaseFactory
+import org.andreasmlbngaol.ymma.faculties.facultyRoute
 import org.andreasmlbngaol.ymma.utils.respondJson
 import java.io.File
 
@@ -34,6 +36,8 @@ fun Application.module() {
             get { call.respondJson(HttpStatusCode.OK, "Allo Woldeu") }
 
             authRoute()
+            collegeRoute()
+            facultyRoute()
 
             post("/upload") {
                 withContext(Dispatchers.IO) {
