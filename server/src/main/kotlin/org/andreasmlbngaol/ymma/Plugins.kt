@@ -13,7 +13,9 @@ import io.ktor.server.auth.jwt.jwt
 import io.ktor.server.plugins.BadRequestException
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.statuspages.StatusPages
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNamingStrategy
 import org.andreasmlbngaol.ymma.utils.respondJson
 
 fun Application.authenticationPlugin() {
@@ -40,12 +42,15 @@ fun Application.authenticationPlugin() {
     }
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 fun Application.contentNegotiationPlugin() {
     install(ContentNegotiation) {
         json(
             json = Json {
                 prettyPrint = true
                 isLenient = true
+                ignoreUnknownKeys = true
+                namingStrategy = JsonNamingStrategy.SnakeCase
             },
             contentType = ContentType.Application.Json
         )

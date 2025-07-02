@@ -3,6 +3,17 @@ package org.andreasmlbngaol.ymma.database
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.config.ApplicationConfig
+import org.andreasmlbngaol.ymma.database.tables.Colleges
+import org.andreasmlbngaol.ymma.database.tables.Comments
+import org.andreasmlbngaol.ymma.database.tables.CourseMemberships
+import org.andreasmlbngaol.ymma.database.tables.CourseScheduleOverrides
+import org.andreasmlbngaol.ymma.database.tables.CourseSchedules
+import org.andreasmlbngaol.ymma.database.tables.Courses
+import org.andreasmlbngaol.ymma.database.tables.Departments
+import org.andreasmlbngaol.ymma.database.tables.Faculties
+import org.andreasmlbngaol.ymma.database.tables.Notifications
+import org.andreasmlbngaol.ymma.database.tables.PostAttachments
+import org.andreasmlbngaol.ymma.database.tables.Posts
 import org.andreasmlbngaol.ymma.database.tables.Users
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
@@ -33,6 +44,17 @@ object DatabaseFactory {
     fun createTableIfNotExist() {
         transaction {
             SchemaUtils.createMissingTablesAndColumns(
+                Colleges,
+                Comments,
+                CourseMemberships,
+                Courses,
+                CourseScheduleOverrides,
+                CourseSchedules,
+                Departments,
+                Faculties,
+                Notifications,
+                PostAttachments,
+                Posts,
                 Users
             )
         }

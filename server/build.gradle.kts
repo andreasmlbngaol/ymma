@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.ktor.server.status.pages)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.kotlin.datetime)
     implementation(libs.postgresql)
     implementation(libs.hikari.cp)
     implementation(libs.bcrypt)

@@ -12,7 +12,8 @@ data class User(
     val username: String,
     val passwordHashed: String,
     val isVerified: Boolean,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val isActive: Boolean = true
 )
 
 fun ResultRow.toUser() = User(
@@ -22,5 +23,6 @@ fun ResultRow.toUser() = User(
     username = this[Users.username],
     passwordHashed = this[Users.passwordHashed],
     isVerified = this[Users.isVerified],
-    imageUrl = this[Users.imageUrl]
+    imageUrl = this[Users.imageUrl],
+    isActive = this[Users.isActive]
 )

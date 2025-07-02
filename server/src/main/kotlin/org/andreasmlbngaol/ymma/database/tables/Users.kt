@@ -9,4 +9,5 @@ object Users: LongIdTable("users") {
     val passwordHashed = varchar("password_hashed", 255)
     val isVerified = bool("is_verified").default(false)
     val imageUrl = varchar("image_url", 255).nullable()
+    val isActive = bool("is_active").default(true)
 }

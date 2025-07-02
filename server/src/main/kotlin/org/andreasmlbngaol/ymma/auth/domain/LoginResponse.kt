@@ -9,5 +9,6 @@ data class LoginResponse(
     val email: String,
     val username: String,
     val isVerified: Boolean,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val accessToken: String? = null
 )

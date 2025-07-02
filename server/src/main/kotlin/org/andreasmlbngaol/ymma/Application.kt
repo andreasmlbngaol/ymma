@@ -32,6 +32,7 @@ fun Application.module() {
     routing {
         route("/api") {
             get { call.respondJson(HttpStatusCode.OK, "Allo Woldeu") }
+
             authRoute()
 
             post("/upload") {
