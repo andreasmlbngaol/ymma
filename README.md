@@ -1,26 +1,24 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Server.
+# YMMA (Yang Mahasiswa Mahasiswa Aja)
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+YMMA adalah aplikasi manajemen kelas yang dirancang khusus untuk mahasiswa. Proyek ini dibangun dengan tujuan memudahkan mahasiswa dalam mengelola kegiatan perkuliahan, berbagi informasi, dan berinteraksi satu sama lain dalam ruang kelas yang berbasis matkul (course).
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Tentang YMMA
 
-* `/server` is for the Ktor server application.
+YMMA ditujukan sepenuhnya untuk mahasiswa, tanpa keterlibatan pihak kampus atau pengajar. Platform ini memberi kebebasan bagi mahasiswa untuk membuat dan mengelola matkul mereka sendiri, berinteraksi, dan berbagi konten secara mandiri. Konsepnya mirip dengan Google Classroom, tetapi dengan pendekatan yang lebih terbuka—setiap anggota matkul dapat berkontribusi secara aktif.
 
-* `/shared` is for the code that will be shared between all targets in the project.
-  The most important subfolder is `commonMain`. If preferred, you can add code to the platform-specific folders here too.
+## Fitur Utama
 
+- Membuat dan bergabung ke dalam matkul dengan kode unik.
+- Sistem peran dalam matkul: Master dan Member.
+- Membuat postingan dalam matkul, termasuk dukungan lampiran (file).
+- Menanggapi dengan komentar dalam setiap postingan.
+- Pagination untuk memuat konten secara efisien.
+- Dukungan upload file ke server sendiri.
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+## Teknologi yang Digunakan
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
-
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+- **Kotlin Multiplatform (KMP)** untuk pengembangan aplikasi lintas platform.
+- **Compose Multiplatform** untuk UI.
+- **Ktor** sebagai backend server framework.
+- **PostgreSQL** sebagai database utama.
+- **Exposed** sebagai ORM untuk akses database.
