@@ -2,6 +2,7 @@ package org.andreasmlbngaol.ymma.auth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.config.ApplicationConfig
 import java.util.Date
 
@@ -53,3 +54,6 @@ object JwtConfig {
         }
     }
 }
+
+fun JWTPrincipal.userId(): Long =
+    this.payload.getClaim("sub").asLong()

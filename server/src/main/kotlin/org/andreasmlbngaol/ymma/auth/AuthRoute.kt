@@ -18,6 +18,7 @@ import org.andreasmlbngaol.ymma.domains.auth.RegisterRequest
 import org.andreasmlbngaol.ymma.database.dao.UsersDao
 import org.andreasmlbngaol.ymma.domains.auth.ChangePasswordRequest
 import org.andreasmlbngaol.ymma.domains.auth.User
+import org.andreasmlbngaol.ymma.plugins.AuthNames.JWT_AUTH
 import org.andreasmlbngaol.ymma.utils.respondJson
 
 fun Route.authRoute() {
@@ -91,7 +92,7 @@ fun Route.authRoute() {
             setCookieAndRespondToken(user)
         }
 
-        authenticate("auth") {
+        authenticate(JWT_AUTH) {
             post("/logout") {
                 call.response.cookies.append(
                     Cookie(

@@ -1,6 +1,6 @@
 package org.andreasmlbngaol.ymma.database.tables
 
-import org.andreasmlbngaol.ymma.database.type.CourseMode
+import org.andreasmlbngaol.ymma.type.CourseMode
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.datetime.date
 import org.jetbrains.exposed.v1.datetime.time

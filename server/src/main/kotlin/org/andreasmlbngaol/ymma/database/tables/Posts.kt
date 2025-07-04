@@ -1,6 +1,6 @@
 package org.andreasmlbngaol.ymma.database.tables
 
-import org.andreasmlbngaol.ymma.database.type.PostType
+import org.andreasmlbngaol.ymma.type.PostType
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.datetime.CurrentDateTime
 import org.jetbrains.exposed.v1.datetime.datetime

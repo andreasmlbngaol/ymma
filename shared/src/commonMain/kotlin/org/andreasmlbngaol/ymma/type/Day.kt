@@ -1,4 +1,4 @@
-package org.andreasmlbngaol.ymma.database.type
+package org.andreasmlbngaol.ymma.type
 
 enum class Day {
     Monday,

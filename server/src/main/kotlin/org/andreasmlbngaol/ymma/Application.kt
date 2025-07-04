@@ -1,24 +1,21 @@
 package org.andreasmlbngaol.ymma
 
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.PartData
-import io.ktor.http.content.forEachPart
-import io.ktor.http.content.streamProvider
-import io.ktor.server.application.Application
-import io.ktor.server.config.ApplicationConfig
-import io.ktor.server.netty.EngineMain
-import io.ktor.server.request.receiveMultipart
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.route
-import io.ktor.server.routing.routing
+import io.ktor.http.*
+import io.ktor.http.content.*
+import io.ktor.server.application.*
+import io.ktor.server.config.*
+import io.ktor.server.netty.*
+import io.ktor.server.request.*
+import io.ktor.server.routing.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.andreasmlbngaol.ymma.auth.JwtConfig
 import org.andreasmlbngaol.ymma.auth.authRoute
-import org.andreasmlbngaol.ymma.colleges.collegeRoute
+import org.andreasmlbngaol.ymma.course.courseRoute
 import org.andreasmlbngaol.ymma.database.DatabaseFactory
-import org.andreasmlbngaol.ymma.faculties.facultyRoute
+import org.andreasmlbngaol.ymma.plugins.authenticationPlugin
+import org.andreasmlbngaol.ymma.plugins.contentNegotiationPlugin
+import org.andreasmlbngaol.ymma.plugins.statusPagesPlugin
 import org.andreasmlbngaol.ymma.utils.respondJson
 import java.io.File
 
@@ -36,8 +33,7 @@ fun Application.module() {
             get { call.respondJson(HttpStatusCode.OK, "Allo Woldeu") }
 
             authRoute()
-            collegeRoute()
-            facultyRoute()
+            courseRoute()
 
             post("/upload") {
                 withContext(Dispatchers.IO) {

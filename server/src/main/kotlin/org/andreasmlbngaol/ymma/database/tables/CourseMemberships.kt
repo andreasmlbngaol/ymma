@@ -1,6 +1,6 @@
 package org.andreasmlbngaol.ymma.database.tables
 
-import org.andreasmlbngaol.ymma.database.type.Role
+import org.andreasmlbngaol.ymma.type.Role
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.datetime.CurrentDateTime
 import org.jetbrains.exposed.v1.datetime.datetime
