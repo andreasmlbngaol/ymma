@@ -1,4 +1,4 @@
-package org.andreasmlbngaol.ymma.course
+package org.andreasmlbngaol.ymma.controllers.course
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
@@ -10,7 +10,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.patch
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
-import org.andreasmlbngaol.ymma.auth.userId
+import org.andreasmlbngaol.ymma.controllers.auth.userId
 import org.andreasmlbngaol.ymma.database.dao.CourseMembershipsDao
 import org.andreasmlbngaol.ymma.database.dao.CoursesDao
 import org.andreasmlbngaol.ymma.domains.course.CreateCourseRequest
@@ -43,9 +43,9 @@ fun Route.courseRoute() {
                 val lecturerName = payload.lecturerName?.trim()
                 val year = payload.year
 
-                var code = CourseCode.generateCode()
+                var code = generateCode()
                 while (CoursesDao.existByCode(code)) {
-                    code = CourseCode.generateCode()
+                    code = generateCode()
                 }
 
                 val courseId = CoursesDao.create(
@@ -178,3 +178,10 @@ fun Route.courseRoute() {
 
 fun Long.isMasterOrStaffOf(courseId: Long) = CourseMembershipsDao
     .findRole(courseId, this) in setOf(Role.Master, Role.Staff)
+
+fun generateCode(): String {
+    val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+    return (1..6)
+        .map { allowedChars.random() }
+        .joinToString("")
+}

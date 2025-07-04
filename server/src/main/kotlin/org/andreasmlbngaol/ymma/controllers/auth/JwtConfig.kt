@@ -1,4 +1,4 @@
-package org.andreasmlbngaol.ymma.auth
+package org.andreasmlbngaol.ymma.controllers.auth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

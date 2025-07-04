@@ -1,4 +1,4 @@
-package org.andreasmlbngaol.ymma.auth
+package org.andreasmlbngaol.ymma.controllers.auth
 
 import at.favre.lib.crypto.bcrypt.BCrypt
 import io.ktor.http.Cookie

@@ -1,23 +1,21 @@
 package org.andreasmlbngaol.ymma
 
 import io.ktor.http.*
-import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.config.*
 import io.ktor.server.netty.*
-import io.ktor.server.request.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.andreasmlbngaol.ymma.auth.JwtConfig
-import org.andreasmlbngaol.ymma.auth.authRoute
-import org.andreasmlbngaol.ymma.course.courseRoute
+import org.andreasmlbngaol.ymma.controllers.auth.JwtConfig
+import org.andreasmlbngaol.ymma.controllers.auth.authRoute
+import org.andreasmlbngaol.ymma.controllers.comment.commentRoute
+import org.andreasmlbngaol.ymma.controllers.course.courseRoute
+import org.andreasmlbngaol.ymma.controllers.post.postRoute
 import org.andreasmlbngaol.ymma.database.DatabaseFactory
 import org.andreasmlbngaol.ymma.plugins.authenticationPlugin
 import org.andreasmlbngaol.ymma.plugins.contentNegotiationPlugin
 import org.andreasmlbngaol.ymma.plugins.statusPagesPlugin
 import org.andreasmlbngaol.ymma.utils.respondJson
-import java.io.File
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
@@ -29,34 +27,18 @@ fun Application.module() {
     statusPagesPlugin()
 
     routing {
+        route("/") {
+            get {
+                call.respondRedirect("/api")
+            }
+        }
         route("/api") {
             get { call.respondJson(HttpStatusCode.OK, "Allo Woldeu") }
 
             authRoute()
             courseRoute()
-
-            post("/upload") {
-                withContext(Dispatchers.IO) {
-                    val multipart = call.receiveMultipart()
-                    var fileName: String? = null
-
-                    multipart.forEachPart { part ->
-                        when (part) {
-                            is PartData.FileItem -> {
-                                fileName = part.originalFileName
-                                val fileBytes = part.streamProvider().readBytes()
-                                File("uploads/$fileName").writeBytes(fileBytes)
-                            }
-
-                            else -> Unit
-                        }
-                        part.dispose()
-                    }
-
-                    if (fileName == null) call.respondJson(HttpStatusCode.BadRequest, "No file uploaded")
-                    else call.respondJson(HttpStatusCode.OK, "File '$fileName' uploaded successfully")
-                }
-            }
+            postRoute()
+            commentRoute()
         }
     }
 }
